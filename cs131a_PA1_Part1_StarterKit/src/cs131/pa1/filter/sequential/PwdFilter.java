@@ -5,17 +5,15 @@ import java.util.LinkedList;
 /**
  * Created by Uros Randelovic on 9/21/2017.
  */
-public class Pwd extends SequentialFilter{
-    public Pwd() {
+public class PwdFilter extends SequentialFilter{
+    public PwdFilter() {
         input = new LinkedList<>();
         output = new LinkedList<>();
     }
     public void process(){
-        SequentialREPL.currentWorkingDirectory
-
+        this.output.add((this.processLine("")));
     }
     public String  processLine(String string){
-        return "uros";
+        return SequentialREPL.currentWorkingDirectory;
     }
-
 }

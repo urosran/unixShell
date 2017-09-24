@@ -24,9 +24,16 @@ public class ImakeCommandsIamTheGod {
             return null;
         }else {
             String[] commands = firstCommand.split("\\|");
-
+            //for every command make the filter and add it to the filters that need to
+            //be executed
             for (int i = 0; i<=commands.length-1; i++){
+                //make the actual filter based on user input
                 SequentialFilter filter = constructFilterFromCommand(commands[i].trim());
+                //if there are no filters to be made return null
+                if (filter == null){
+                    return null;
+                }
+            filters.add(filter);
             }
         }
     }
@@ -38,7 +45,7 @@ public class ImakeCommandsIamTheGod {
         //chopping up the string into separate commands and taking the first one to create a filter out of it
         String [] singleCommands = command.split(" ");
         if (singleCommands[0].equals("cd")){
-            filter = new CdFilter();
+            filter = new CdFilter(command);
             return (SequentialFilter) filter;
         }else if (singleCommands[0].equals("ls")){
             filter = new LsFilter();
@@ -50,10 +57,7 @@ public class ImakeCommandsIamTheGod {
             filter = new PwdFilter();
             return (SequentialFilter) filter;
         }else if (singleCommands[0].equals("grep")){
-            filter = new GrepFilter();
-            return (SequentialFilter) filter;
-        }else if (singleCommands[0].equals("head")){
-            filter = new HeadFilter();
+            filter = new GrepFilter(command);
             return (SequentialFilter) filter;
         }else { System.out.printf(Message.COMMAND_NOT_FOUND.toString(), command); return null;}
     }
