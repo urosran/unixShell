@@ -36,7 +36,30 @@ public class ImakeCommandsIamTheGod {
             filters.add(filter);
             }
         }
+
+        SequentialFilter linkFilters = determineFinalFilter(userInput)
+        if (linkFilters == null) {
+            return null;
+        }else {
+            filters.add(linkFilters);
+        }
     }
+
+
+    private static SequentialFilter determineFinalFilter(String userInput) {
+        //removing the ">" from the input to read the command
+        String[] commandsWOPointer = userInput.split(">");
+        if (commandsWOPointer.length > 1) {
+            return new PrintFilter();
+        } else {
+            try {
+                return new RedirectFilter("> " + commandsWOPointer[1]);
+            } catch (Exception FileNotFound) {
+                return null;
+            }
+        }
+    }
+
 
     //creates a filter for each command instructed by the user
     private static SequentialFilter constructFilterFromCommand(String command){
